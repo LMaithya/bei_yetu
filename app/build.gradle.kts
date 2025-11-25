@@ -46,6 +46,7 @@ android {
     dependencies {
         // --- Compose and Core Libraries ---
         implementation(platform("androidx.compose:compose-bom:2024.04.00"))
+        implementation(libs.androidx.foundation) // ViewModel integration
         implementation("androidx.compose.ui:ui")
         implementation("androidx.compose.ui:ui-graphics")
         implementation("androidx.compose.ui:ui-tooling-preview")
@@ -84,7 +85,7 @@ android {
         debugImplementation("androidx.compose.ui:ui-tooling:1.6.0")
         implementation("com.google.android.material:material:1.11.0")
         implementation("androidx.navigation:navigation-compose:2.7.0")
-
+        implementation("androidx.compose.material:material-icons-extended")
 
         implementation("androidx.room:room-runtime:2.6.1")
         kapt("androidx.room:room-compiler:2.6.1")
