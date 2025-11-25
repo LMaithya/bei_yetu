@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.*
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.projectdraft.ProjectdraftTheme
  // ✅ use your actual theme name
@@ -14,6 +15,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             ProjectdraftTheme { // ✅ fix theme here
+                /*
                 val viewModel: ResultsViewModel = viewModel()
                 val products by viewModel.products.collectAsState() // ✅ add correct type inference
                 var showResults by remember { mutableStateOf(false) }
@@ -25,7 +27,10 @@ class MainActivity : ComponentActivity() {
                     }
                 } //else {
                   //  ResultsScreen(products)
-               // }
+               // }*/
+
+                val viewModel = ViewModelProvider(this)[HomeViewModel::class.java]
+                HomePageScreen(viewModel)
             }
         }
     }
