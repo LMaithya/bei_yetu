@@ -20,6 +20,8 @@ class LogInActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
+            var email by remember { mutableStateOf("") }
+
             ProjectdraftTheme {
                 LoginScreen(
                     onLogin = {
@@ -28,7 +30,9 @@ class LogInActivity : ComponentActivity() {
                     },
                     onGoToSignUp = {
                         startActivity(Intent(this, SignUpActivity::class.java))
-                    }
+                    },
+                    emailState = email,
+                    onEmailChange = { email = it }
                 )
             }
         }
@@ -36,7 +40,13 @@ class LogInActivity : ComponentActivity() {
 }
 
 @Composable
-fun LoginScreen(onLogin: () -> Unit, onGoToSignUp: () -> Unit) {
+fun LoginScreen(
+    onLogin: () -> Unit,
+    onGoToSignUp: () -> Unit,
+    emailState: String,
+    onEmailChange: (String) -> Unit
+
+) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
@@ -100,10 +110,14 @@ fun LoginScreen(onLogin: () -> Unit, onGoToSignUp: () -> Unit) {
 @Preview(showBackground = true, name = "Login Screen Preview")
 @Composable
 fun LoginScreenPreview() {
+    var email by remember { mutableStateOf("") }
+
     ProjectdraftTheme {
         LoginScreen(
             onLogin = { /* Preview: Login Clicked */ },
-            onGoToSignUp = { /* Preview: Sign Up Clicked */ }
+            onGoToSignUp = { /* Preview: Sign Up Clicked */ },
+            emailState = email,
+            onEmailChange = { email = it }
         )
     }
 }
