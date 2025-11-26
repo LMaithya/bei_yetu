@@ -78,7 +78,7 @@ class MainActivity : ComponentActivity() {
                 ) { innerPadding ->
                     NavHost(
                         navController = navController,
-                        startDestination = "home",
+                        startDestination = "login",
                         modifier = Modifier.padding(innerPadding)
                     ) {
                         composable("login") {
@@ -144,24 +144,24 @@ class MainActivity : ComponentActivity() {
                         }
 
                         composable("account") {
+                            val navController = rememberNavController()
+                            val userSessionViewModel: UserSessionViewModel = viewModel()
+
                             AccountScreen(
                                 userName = userSessionViewModel.currentUser.collectAsState().value ?: "Guest",
                                 onLogoutClicked = {
                                     userSessionViewModel.logout()
                                     navController.navigate("login") {
-                                        popUpTo("home") { inclusive = true }
+                                        popUpTo("home") { inclusive = true } // clears backstack
+                                        launchSingleTop = true
                                     }
                                 },
-                                onUserProfileClicked = {
-                                    // Navigate to a profile details screen if you have one
-                                    navController.navigate("profile")
-                                },
+                                onUserProfileClicked = { navController.navigate("profile") },
                                 isPushEnabled = pushEnabledState.value,
-                                onPushToggle = { enabled ->
-                                    pushEnabledState.value = enabled
-                                }
+                                onPushToggle = { enabled -> pushEnabledState.value = enabled }
                             )
                         }
+
 
                         // Other screens
                         // composable(Screen.Orders.route) { OrdersScreen() }
