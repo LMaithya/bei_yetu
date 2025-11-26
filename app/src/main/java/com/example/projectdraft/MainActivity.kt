@@ -34,6 +34,7 @@ class MainActivity : ComponentActivity() {
             ProjectdraftTheme {
                 val navController = rememberNavController()
                 val viewModel: HomeViewModel = viewModel()
+                val userSessionViewModel: UserSessionViewModel = viewModel()
                 val items = listOf(
                     Screen.Home, Screen.Orders, Screen.Categories, Screen.Account
                 )
@@ -77,16 +78,19 @@ class MainActivity : ComponentActivity() {
                         modifier = Modifier.padding(innerPadding)
                     ) {
                         composable("login") {
+                            var email by remember { mutableStateOf("") }
+
                             LoginScreen(
                                 onLogin = {
+                                    userSessionViewModel.login(email) // ✅ must be called here
                                     navController.navigate("home?searchQuery=null") {
                                         popUpTo("login") { inclusive = true }
                                         launchSingleTop = true
                                     }
                                 },
-                                onGoToSignUp = {
-                                    navController.navigate("signup")
-                                }
+                                onGoToSignUp = { navController.navigate("signup") },
+                                emailState = email,
+                                onEmailChange = { email = it }
                             )
                         }
 

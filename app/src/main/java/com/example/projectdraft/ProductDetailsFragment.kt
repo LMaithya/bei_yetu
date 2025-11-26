@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
+import androidx.compose.material.Divider
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material3.MaterialTheme
@@ -60,13 +61,21 @@ fun ProductDetailScreen(
         }
     }
 }
+
 @Composable
 fun ProductDetails(
     product: ProductWithCategoryAndSubcategory,
-    listings: List<StorePriceListing>
+    listings: List<StorePriceListing>,
+    viewModel: ProductDetailViewModel = viewModel(),
+    userSessionViewModel: UserSessionViewModel = viewModel()
+
+
 ) {
     val bestListing = listings.minByOrNull { it.price }
     var commentText by remember { mutableStateOf("") }
+    val comments by viewModel.comments.collectAsState()
+    val currentUserName by userSessionViewModel.currentUser.collectAsState()
+
 
     Box(modifier = Modifier.fillMaxSize()) {
         LazyColumn(
@@ -185,12 +194,12 @@ fun ProductDetails(
                 TextField(
                     value = commentText,
                     onValueChange = { commentText = it },
-                    placeholder = { Text("Sign in to comment...") },
+                    placeholder = { Text("Write a comment...") },
                     modifier = Modifier
                         .fillMaxWidth()
                         .size(100.dp)
-
                 )
+
             }
 
             item {
@@ -201,8 +210,28 @@ fun ProductDetails(
                         .padding(10.dp),
                     contentAlignment = Alignment.CenterEnd
                 ) {
-                    Button(onClick = { /* TODO: handle comment */ }) {
+                    Button(
+                        onClick = {
+                            if (commentText.isNotBlank()) {
+                                viewModel.addComment(product.id.toString(), "Anonymous", commentText)
+                                commentText = ""
+                            }
+                        }
+                    ) {
                         Text("Comment")
+                    }
+                }
+            }
+
+            item {
+                Spacer(modifier = Modifier.height(16.dp))
+                Text("All Comments", style = MaterialTheme.typography.titleMedium)
+
+                comments.forEach { comment ->
+                    Column(modifier = Modifier.padding(vertical = 8.dp)) {
+                        Text("${comment.userName}:", fontWeight = FontWeight.Bold)
+                        Text(comment.text)
+                        Divider()
                     }
                 }
             }
