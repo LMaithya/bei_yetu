@@ -73,9 +73,20 @@ class MainActivity : ComponentActivity() {
                 ) { innerPadding ->
                     NavHost(
                         navController = navController,
-                        startDestination = "home?searchQuery={searchQuery}",
+                        startDestination = "home",
                         modifier = Modifier.padding(innerPadding)
                     ) {
+
+                        // Home route without query parameters
+                        composable("home") {
+                            HomePageScreen(
+                                viewModel = viewModel,
+                                navController = navController,
+                                searchQuery = null
+                            )
+                        }
+
+                        // Home route WITH query parameter
                         composable(
                             route = "home?searchQuery={searchQuery}",
                             arguments = listOf(
@@ -93,6 +104,7 @@ class MainActivity : ComponentActivity() {
                                 searchQuery = searchQuery
                             )
                         }
+
 
                         composable("productDetail/{productId}") { backStackEntry ->
                             val productId = backStackEntry.arguments?.getString("productId")?.toInt() ?: 0
