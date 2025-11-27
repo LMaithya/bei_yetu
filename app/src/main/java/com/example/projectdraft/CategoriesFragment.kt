@@ -63,7 +63,7 @@ class CategoriesFragment : Fragment() {
                 }
             }
         }
-    }
+    }//added by teammate to connect the search bar to the SearchResultsPage/Fragment
     fun navigateToSearch(query: String) {
         val fragment = SearchResultsFragment().apply {
             arguments = Bundle().apply {
