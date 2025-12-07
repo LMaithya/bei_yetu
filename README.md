@@ -74,9 +74,7 @@ This is a collaborative Android app built with Jetpack Compose and Room Database
 - Continuous integration (CI/CD) pipeline.
 - Publish to Google Play Store.
 
-🔹 **Original Repository**
-Forked from https://github.com/LMaithya/bei_yetu
-
 ---
 
-⭐ *This fork highlights my individual contributions to a group web application project focused on student housing management.*
+🔹 **Original Repository**
+Forked from https://github.com/LMaithya/bei_yetu
