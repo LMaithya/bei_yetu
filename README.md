@@ -22,7 +22,8 @@ This is a collaborative Android app built with Jetpack Compose and Room Database
 
 ## Demo Pictures
 - Sign up and Log in<br>
-<img width="231" height="512" alt="image" src="https://github.com/user-attachments/assets/173ee46a-fdc8-41c4-a34b-8a052bdcc906" />
+<img width="343" height="762" alt="image" src="https://github.com/user-attachments/assets/105e0714-8ca1-4870-b1ef-be3fb61f8de5" />
+
 
 - Home Page and Categories page<br>
 - Product details page<br>
